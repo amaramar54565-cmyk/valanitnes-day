@@ -15,26 +15,32 @@ body{
   justify-content:center;
   align-items:center;
   background:linear-gradient(135deg,#ff9a9e,#fad0c4);
-  font-family:Arial, sans-serif;
+  font-family:'Arial', sans-serif;
   overflow:hidden;
 }
 
 .card{
   background:white;
   padding:25px;
-  border-radius:20px;
+  border-radius:22px;
   text-align:center;
   width:90%;
-  max-width:350px;
+  max-width:360px;
   position:relative;
   z-index:2;
 }
 
-h1{color:#ff4d6d;}
-p{color:#555;}
+h1{
+  color:#ff4d6d;
+}
+
+p{
+  color:#555;
+  font-size:15px;
+}
 
 button{
-  padding:12px 22px;
+  padding:12px 24px;
   border:none;
   border-radius:25px;
   font-size:16px;
@@ -54,7 +60,7 @@ button{
   transform:translateX(-50%);
 }
 
-/* Hearts */
+/* hearts */
 .heart{
   position:absolute;
   font-size:20px;
@@ -65,23 +71,39 @@ button{
   to{transform:translateY(-10vh);opacity:1}
 }
 
+/* big good choice */
+.good{
+  font-size:32px;
+  font-weight:bold;
+  color:#ff4d6d;
+  margin-bottom:5px;
+}
+
+.sticker{
+  font-size:60px;
+  margin:10px 0;
+}
+
 .msg{
-  font-size:45px;
-  margin-top:10px;
+  font-size:46px;
   cursor:pointer;
+  margin-top:10px;
 }
 
 .secret{
-  margin-top:10px;
+  margin-top:12px;
   background:#fff0f5;
-  padding:12px;
-  border-radius:12px;
-  min-height:60px;
-  display:none;
+  padding:14px;
+  border-radius:14px;
+  min-height:70px;
   text-align:left;
   font-size:14px;
 }
-.typing{font-size:12px;color:#888;display:none}
+.tap{
+  font-size:12px;
+  color:#888;
+  margin-top:6px;
+}
 </style>
 </head>
 
@@ -95,11 +117,10 @@ button{
 </div>
 
 <script>
-const noBtn=document.getElementById("no");
-const yesBtn=document.getElementById("yes");
 const card=document.getElementById("card");
+const noBtn=document.getElementById("no");
 
-/* NO runs away */
+/* NO runs */
 function moveNo(){
   noBtn.style.left=Math.random()*(window.innerWidth-120)+"px";
   noBtn.style.top=Math.random()*(window.innerHeight-60)+"px";
@@ -107,47 +128,36 @@ function moveNo(){
 noBtn.addEventListener("mouseenter",moveNo);
 noBtn.addEventListener("touchstart",moveNo);
 
-/* YES click */
-yesBtn.onclick=()=>{
+/* YES */
+document.getElementById("yes").onclick=()=>{
   card.innerHTML=`
-    <h1>You said YES 😌</h1>
-    <p>Good choice.</p>
+    <div class="good">GOOD CHOICE 💖</div>
+    <div class="sticker">💑🥰</div>
+    <p>You just made my heart very happy.</p>
+
     <div class="msg" id="msg">💌</div>
-    <div class="typing" id="typing">typing…</div>
     <div class="secret" id="secret"></div>
-    <p style="font-size:12px">Tap the message…</p>
+    <div class="tap">Tap the message 💌</div>
   `;
 
   const messages=[
-    "Hey Chinmin… I like that you said yes 😌",
-    "You’re still tapping? Interesting 😏",
-    "Each tap makes this feel more dangerous.",
-    "You’re enjoying this more than you admit 🫣",
-    "Okay… come closer. This one’s just for you 💖"
+    "Hey Chinmin… I really like that you said yes 😌",
+    "You tapping again tells me you’re curious 😏",
+    "Every tap feels a little more personal.",
+    "I hope you know you look cute as my Valentine 🫣",
+    "Okay… that smile you’re making? I like it 💖"
   ];
 
-  let i=0;
+  let index=0;
   const msg=document.getElementById("msg");
   const secret=document.getElementById("secret");
-  const typing=document.getElementById("typing");
-
-  function typeText(text){
-    secret.style.display="block";
-    typing.style.display="block";
-    secret.innerHTML="";
-    let c=0;
-    const iv=setInterval(()=>{
-      secret.innerHTML+=text.charAt(c++);
-      if(c>=text.length){
-        clearInterval(iv);
-        typing.style.display="none";
-      }
-    },30);
-  }
 
   msg.onclick=()=>{
-    typeText(messages[i]);
-    i=Math.min(i+1,messages.length-1);
+    secret.textContent=messages[index];
+    index++;
+    if(index>=messages.length){
+      index=messages.length-1; // stay on last
+    }
   };
 };
 
@@ -164,3 +174,4 @@ setInterval(()=>{
 
 </body>
 </html>
+
